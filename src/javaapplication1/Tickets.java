@@ -33,6 +33,7 @@ public class Tickets extends JFrame implements ActionListener {
 	JMenuItem mnuItemDelete;
 	JMenuItem mnuItemOpenTicket;
 	JMenuItem mnuItemViewTicket;
+	JMenuItem mnuItemCloseTicket;
 
 	public Tickets(Boolean isAdmin) {
 
@@ -71,7 +72,11 @@ public class Tickets extends JFrame implements ActionListener {
 		// add to Ticket Main menu item
 		mnuTickets.add(mnuItemViewTicket);
 
-		// initialize any more desired sub menu items below
+		
+		// initialize third sub menu item for Tickets main menu
+		mnuItemCloseTicket = new JMenuItem("Close Ticket");
+		// add to Ticket Main menu item
+		mnuTickets.add(mnuItemCloseTicket);
 
 		/* Add action listeners for each desired menu item *************/
 		mnuItemExit.addActionListener(this);
@@ -79,12 +84,8 @@ public class Tickets extends JFrame implements ActionListener {
 		mnuItemDelete.addActionListener(this);
 		mnuItemOpenTicket.addActionListener(this);
 		mnuItemViewTicket.addActionListener(this);
-
-		 /*
-		  * continue implementing any other desired sub menu items (like 
-		  * for update and delete sub menus for example) with similar 
-		  * syntax & logic as shown above*
-		 */
+		
+		mnuItemCloseTicket.addActionListener(this);
 
 
 	}
@@ -156,6 +157,50 @@ public class Tickets extends JFrame implements ActionListener {
 		 * continue implementing any other desired sub menu items (like for update and
 		 * delete sub menus for example) with similar syntax & logic as shown above
 		 */
+		else if (e.getSource() == mnuItemUpdate) {
+			
+			// get ticket information
+			String ticketID = JOptionPane.showInputDialog(null, "Enter ticket ID");
+			int tid = Integer.parseInt(ticketID);
+			String ticketName = JOptionPane.showInputDialog(null, "Enter your name");
+			String ticketDesc = JOptionPane.showInputDialog(null, "Enter a ticket description");
+			
+			// display results if successful or not to console / dialog box
+			if (dao.updateRecords(tid, ticketName, ticketDesc)) {
+				System.out.println("Ticket ID : " + ticketID + " updated successfully!!!");
+				JOptionPane.showMessageDialog(null, "Ticket id: " + ticketID + " updated");
+			} else
+				System.out.println("Ticket cannot be updated!!!");
+		}
+		
+		else if (e.getSource() == mnuItemDelete) {
+			
+			// get ticket information
+			String ticketID = JOptionPane.showInputDialog(null, "Enter ticket ID");
+			int tid = Integer.parseInt(ticketID);
+			
+			// display results if successful or not to console / dialog box
+			if (dao.deleteRecords(tid)) {
+				System.out.println("Ticket ID : " + ticketID + " deleted");
+				JOptionPane.showMessageDialog(null, "Ticket id: " + ticketID + " deleted");
+			} else
+				System.out.println("Ticket cannot be deleted!!!");
+		}
+		
+		else if (e.getSource() == mnuItemCloseTicket) {
+			
+			
+			// get ticket information
+			String ticketID = JOptionPane.showInputDialog(null, "Enter ticket ID");
+			int tid = Integer.parseInt(ticketID);
+						
+			// display results if successful or not to console / dialog box
+			if (dao.closeRecords(tid)) {
+				System.out.println("Ticket ID : " + ticketID + " closed");
+				JOptionPane.showMessageDialog(null, "Ticket id: " + ticketID + " closed");
+			} else
+				System.out.println("Ticket cannot be closed!!!");
+		}
 
 	}
 
