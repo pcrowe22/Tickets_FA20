@@ -24,6 +24,7 @@ public class Tickets extends JFrame implements ActionListener {
 
 	// Main menu object items
 	private JMenu mnuFile = new JMenu("File");
+
 	private JMenu mnuAdmin = new JMenu("Admin");
 	private JMenu mnuTickets = new JMenu("Tickets");
 
@@ -56,12 +57,12 @@ public class Tickets extends JFrame implements ActionListener {
 		mnuItemUpdate = new JMenuItem("Update Ticket");
 		// add to Admin main menu item
 		mnuAdmin.add(mnuItemUpdate);
-
 		// initialize second sub menu items for Admin main menu
 		mnuItemDelete = new JMenuItem("Delete Ticket");
+
 		// add to Admin main menu item
 		mnuAdmin.add(mnuItemDelete);
-
+		
 		// initialize first sub menu item for Tickets main menu
 		mnuItemOpenTicket = new JMenuItem("Open Ticket");
 		// add to Ticket Main menu item
@@ -95,7 +96,9 @@ public class Tickets extends JFrame implements ActionListener {
 		// create JMenu bar
 		JMenuBar bar = new JMenuBar();
 		bar.add(mnuFile); // add main menu items in order, to JMenuBar
-		bar.add(mnuAdmin);
+		if (chkIfAdmin) {
+			bar.add(mnuAdmin);
+		}
 		bar.add(mnuTickets);
 		// add menu bar components to frame
 		setJMenuBar(bar);
@@ -148,6 +151,7 @@ public class Tickets extends JFrame implements ActionListener {
 				JScrollPane sp = new JScrollPane(jt);
 				add(sp);
 				setVisible(true); // refreshes or repaints frame on screen
+				System.out.println("Retrieving records.");
 
 			} catch (SQLException e1) {
 				e1.printStackTrace();
